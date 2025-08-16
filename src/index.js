@@ -15,6 +15,11 @@ function createDropdown(buttonText, listItems) {
     const item = document.createElement("li");
     item.textContent = listItem.title;
     list.append(item);
+
+    item.addEventListener("click", () => {
+      controlMonitor(listItem.title.toLowerCase());
+      list.style.visibility = "hidden";
+    });
   });
 
   button.addEventListener("click", () => {
@@ -22,13 +27,8 @@ function createDropdown(buttonText, listItems) {
       list.style.visibility === "hidden" ? "visible" : "hidden";
   });
 
-  dropDownContainer.addEventListener("click", (e) => {
-    const currentCommand = e.target.textContent.toLowerCase();
-    controlMonitor(currentCommand);
-  });
-
-  dropDownContainer.appendChild(button);
   dropDownContainer.appendChild(list);
+  container.appendChild(button);
   container.appendChild(dropDownContainer);
 }
 
@@ -42,18 +42,28 @@ createDropdown("Apple", listitems);
 
 function controlMonitor(command) {
   const screen = document.querySelector(".screen");
-  screen.addEventListener("mouseover", ChangeBg);
   switch (command) {
     case "restart":
       screen.style.backgroundColor = "black";
       setTimeout(() => {
         screen.style.backgroundColor = "white";
       }, 5000);
+      screen.removeEventListener("click", ChangeBg);
+      break;
     case "sleep":
       screen.style.backgroundColor = "black";
+      // Remove any existing listener to avoid duplicates
+      screen.removeEventListener("click", ChangeBg);
+      // Add new listener
+      screen.addEventListener("click", ChangeBg);
+      break;
     case "shut down":
       screen.style.backgroundColor = "black";
-      screen.removeEventListener("mouseover", ChangeBg);
+      // Remove any click functionality
+      screen.removeEventListener("click", ChangeBg);
+      // Make sure no future clicks will change the color
+      screen.onclick = null;
+      break;
   }
 }
 
