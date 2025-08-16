@@ -38,7 +38,7 @@ const listitems = [
   { title: "Shut down" },
 ];
 
-createDropdown("Apple", listitems);
+createDropdown("Settings", listitems);
 
 function controlMonitor(command) {
   const screen = document.querySelector(".screen");
