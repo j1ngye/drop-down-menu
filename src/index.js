@@ -44,21 +44,21 @@ function controlMonitor(command) {
   const screen = document.querySelector(".screen");
   switch (command) {
     case "restart":
-      screen.style.backgroundColor = "black";
+      screen.style.opacity = "0";
       setTimeout(() => {
-        screen.style.backgroundColor = "white";
+        screen.style.opacity = "1";
       }, 5000);
       screen.removeEventListener("click", ChangeBg);
       break;
     case "sleep":
-      screen.style.backgroundColor = "black";
+      screen.style.opacity = "0";
       // Remove any existing listener to avoid duplicates
       screen.removeEventListener("click", ChangeBg);
       // Add new listener
       screen.addEventListener("click", ChangeBg);
       break;
     case "shut down":
-      screen.style.backgroundColor = "black";
+      screen.style.opacity = "0";
       // Remove any click functionality
       screen.removeEventListener("click", ChangeBg);
       // Make sure no future clicks will change the color
@@ -68,5 +68,5 @@ function controlMonitor(command) {
 }
 
 function ChangeBg() {
-  this.style.backgroundColor = "white";
+  this.style.opacity = "1";
 }
