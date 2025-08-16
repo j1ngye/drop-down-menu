@@ -22,15 +22,41 @@ function createDropdown(buttonText, listItems) {
       list.style.visibility === "hidden" ? "visible" : "hidden";
   });
 
+  dropDownContainer.addEventListener("click", (e) => {
+    const currentCommand = e.target.textContent.toLowerCase();
+    controlMonitor(currentCommand);
+  });
+
   dropDownContainer.appendChild(button);
   dropDownContainer.appendChild(list);
   container.appendChild(dropDownContainer);
 }
 
 const listitems = [
-  { title: "Reset" },
+  { title: "Restart" },
   { title: "Sleep" },
   { title: "Shut down" },
 ];
 
 createDropdown("Apple", listitems);
+
+function controlMonitor(command) {
+  const screen = document.querySelector(".screen");
+  screen.addEventListener("mouseover", ChangeBg);
+  switch (command) {
+    case "restart":
+      screen.style.backgroundColor = "black";
+      setTimeout(() => {
+        screen.style.backgroundColor = "white";
+      }, 5000);
+    case "sleep":
+      screen.style.backgroundColor = "black";
+    case "shut down":
+      screen.style.backgroundColor = "black";
+      screen.removeEventListener("mouseover", ChangeBg);
+  }
+}
+
+function ChangeBg() {
+  this.style.backgroundColor = "white";
+}
